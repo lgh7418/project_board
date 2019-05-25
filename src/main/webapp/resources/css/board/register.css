@@ -1,0 +1,109 @@
+
+.register form {
+  width: 75%;
+  margin: 0 auto;
+}
+.register .input-group-prepend {
+  width: 10%;
+}
+.register .input-group-text {
+  background-color: transparent;
+  border: 0;
+  font-weight: bold;
+  letter-spacing: 2px;
+}
+
+.register .form-control {
+  border-radius: 0;
+}
+
+.register .btn-link {
+  float: right;
+  margin-top: 5px;
+}
+.register textarea {
+  resize: none;
+  margin-bottom: 40px;
+}
+.register .form-control:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0;
+  border: 1px solid #ced4da;
+}
+.register .register-box {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.register .register-box .btn-info {
+  margin-right: 20px;
+  width: 90px;
+}
+.register .register-box .btn-outline-info {
+  width: 90px;
+}
+
+.register .dropdown {
+  float: right;
+  margin-top: 25px;
+}
+.register .dropdown-toggle::after {
+  display: none;
+}
+.register .dropdown-toggle:focus {
+  box-shadow: none;
+}
+.register .dropdown-menu {
+  border-radius: 1px;
+  border-color: #e5e5e5;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  top: 5px !important;
+  transform: translate3d(30px, 45px, 0px) !important;
+}
+
+.register .dropdown-menu li {
+  padding: 3px 22px;
+}
+
+.register .dropdown-menu li.dropdown-divider {
+  padding: 0;
+}
+
+.register .dropdown-menu li a {
+  color: #777;
+  line-height: normal;
+}
+.register .dropdown-menu li a:hover,
+.register .dropdown-menu li a:active {
+  color: #333;
+  text-decoration: none;
+}
+.register .dropdown-menu i {
+  width: 28px;
+}
+/* caret style */
+.register .caret {
+  position: relative;
+}
+.register .dropdown.show .caret:before,
+.register .dropdown.show .caret:after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 0;
+  border-width: 7px 8px;
+  border-style: solid;
+  border-color: transparent;
+  z-index: 1001;
+}
+.register .dropdown.show .caret:before {
+  bottom: -17px;
+  right: 18px;
+  border-bottom-color: #ccc;
+}
+.register .dropdown.show .caret:after {
+  bottom: -18px;
+  right: 18px;
+  border-bottom-color: #fff;
+}

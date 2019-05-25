@@ -1,0 +1,102 @@
+header,
+.board {
+  width: 75%;
+  max-width: 950px;
+  margin: 0 auto;
+}
+.board {
+  margin-bottom: 100px;
+}
+
+h1 {
+  display: inline-block;
+  margin-top: 20px;
+  margin-bottom: 10%;
+  cursor: pointer;
+}
+#register {
+  margin-top: 25px;
+  float: right;
+}
+#login {
+  margin-top: 25px;
+  margin-right: 10px;
+  float: right;
+}
+
+.btn-group {
+  width: fit-content;
+  /* float: right;
+    margin-top: 25px; */
+  cursor: pointer;
+}
+.profile {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.profile-text {
+  margin: auto;
+  padding-left: 10px;
+}
+
+.member .modal-dialog {
+  width: 460px;
+}
+.member .modal-header {
+  padding: 0.8rem 0.8rem;
+}
+
+.member .modal-body {
+  background: #f7f7f7;
+  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  padding-top: 10%;
+}
+.member .modal-body form {
+  width: 70%;
+  margin: 0 auto;
+  margin-bottom: 25px;
+}
+.member .login-form h2 {
+  margin: 0 0 15px;
+}
+.member .hint-text {
+  color: #777;
+  padding-bottom: 15px;
+  margin: 0 auto;
+}
+.member .modal-body .form-control,
+.member .modal-body .btn {
+  min-height: 38px;
+  border-radius: 2px;
+}
+.member .login-btn {
+  font-size: 15px;
+  font-weight: bold;
+}
+.member .or-seperator {
+  margin: 20px 0 10px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+.member .or-seperator i {
+  padding: 0 10px;
+  background: #f7f7f7;
+  position: relative;
+  top: -11px;
+  z-index: 1;
+}
+.member .social-btn .btn {
+  margin: 10px 0;
+  font-size: 15px;
+  text-align: left;
+  line-height: 24px;
+}
+.member .social-btn .btn i {
+  float: left;
+  margin: 4px 15px 0 5px;
+  min-width: 15px;
+}
+

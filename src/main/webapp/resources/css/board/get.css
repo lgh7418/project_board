@@ -1,0 +1,140 @@
+.read {
+  max-width: 850px;
+  margin: 0 auto;
+}
+.read .card-header {
+  display: -ms-flexbox;
+  display: flex;
+  padding: 0.5rem 1.25rem;
+}
+.read .card-header h5 {
+  margin: 10px 5px;
+  font-weight: bold;
+}
+.read .card-header .article-title {
+  -ms-flex: 2;
+  flex: 2;
+}
+.read .card-header .article-date {
+  -ms-flex: 1;
+  flex: 1;
+  text-align: right;
+}
+.read .card-header .article-date p {
+  margin: 10px 5px;
+}
+
+.read .card-header .article-date p:first-child {
+  color: #999;
+}
+
+.read .card-header .article-date i {
+  width: 30px;
+}
+.read .card-header .btn-group {
+  width: fit-content;
+}
+.read .card-header .profile {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.read .card-header .profile img {
+  width: 30px;
+}
+.read .card-header .profile-text {
+  margin: auto;
+  padding-left: 8px;
+}
+.read .card-text {
+  margin-bottom: 60px;
+}
+
+.read .like-box {
+  width: fit-content;
+  float: right;
+}
+
+.read .like-box .input-group-text {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+.read .like-box div {
+  padding: 3px;
+}
+.read .like-box div i {
+  font-size: 30px;
+}
+
+.read .like-box button.btn {
+  padding-left: 5px;
+}
+
+.read .reply-count {
+  margin-bottom: 5px;
+  margin-left: 5px;
+  clear: both;
+}
+.read .card-footer {
+  border-top: none;
+  /* padding-top: 20px; */
+}
+.read .card-footer .reply-form {
+  position: relative;
+  padding-top: 8px;
+  margin-top: 8px;
+}
+.read .card-footer .btn-group {
+  width: fit-content;
+}
+.read .card-footer .profile {
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.read .card-footer .profile img {
+  width: 30px;
+}
+.read .card-footer .profile-text {
+  margin: auto;
+  padding-left: 8px;
+}
+.read .card-footer .reply-profile p {
+  margin-left: 40px;
+  margin-bottom: 4px;
+}
+.read .card-footer p {
+  color: #000;
+}
+.read .card-footer p.reply-date {
+  font-size: 13px;
+  color: #999;
+}
+.read textarea.form-control {
+  resize: none;
+  width: 90.5%;
+  display: inline-block;
+}
+.read .card-footer .btn {
+  position: absolute;
+  right: 0;
+  height: 62px;
+}
+
+.read .float-right {
+  margin-top: 10px;
+}
+
+.read .float-right .btn-outline-info {
+  margin-right: 10px;
+}
+
+.read::after {
+  display: block;
+  content: "";
+  clear: both;
+}

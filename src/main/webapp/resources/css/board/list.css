@@ -1,0 +1,26 @@
+.list th {
+  text-align: center;
+}
+.list td .btn-info {
+  float: right;
+}
+.list nav {
+  width: fit-content;
+  margin: 0 auto;
+}
+
+.list .search {
+  justify-content: center;
+  margin-top: 40px;
+}
+.list .search .custom-select {
+  margin-right: 10px;
+}
+.list .search .btn {
+  border-color: #ced4da;
+  color: #6c757d;
+}
+.list .search .btn:hover {
+  background-color: #ced4da;
+  color: white;
+}
