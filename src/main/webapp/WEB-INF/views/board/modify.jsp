@@ -6,6 +6,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
  	<div class="board register">
       <form action="/board/modify" method="post">
+      	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
+        <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
       	<input type="hidden" name="bno" value='<c:out value="${board.bno }" />' />
       	<input type="hidden" name="writer" value='<c:out value="${board.writer }" />' />
         <div class="input-group">

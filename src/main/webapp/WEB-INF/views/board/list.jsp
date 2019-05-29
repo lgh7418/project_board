@@ -20,34 +20,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td><a href="/board/get">Mark</a> [2]</td>
-            <td>Otto</td>
-            <td class="text-center">19:30</td>
-            <td class="text-center">3</td>
-            <td class="text-center">1</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>${pageContext.request.requestURL}</td>
-            <td>Thornton</td>
-            <td class="text-center">19.03.21</td>
-            <td class="text-center">33</td>
-            <td class="text-center">23</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td><c:out value="${pageContext.request.contextPath}1" /></td>
-            <td>the Bird</td>
-            <td class="text-center">19.01.01</td>
-            <td class="text-center">122</td>
-            <td class="text-center">4</td>
-          </tr>
           <c:forEach items="${list }" var="board">
           	<tr>
           		<td><c:out value="${board.bno }"/></td>
-          		<td><a href='/board/get?bno=<c:out value="${board.bno }"/>'><c:out value="${board.title }"/></a></td>
+          		<td>
+          		  <a class='move' href='<c:out value="${board.bno}"/>'>
+          		    <c:out value="${board.title}" />
+				  </a>
+				</td>
           		<td><c:out value="${board.writer}"/></td>
           		<td class="text-center"><fmt:formatDate pattern="yy.MM.dd" value="${board.regdate }"/></td>
           		<td class="text-center">3</td>
@@ -62,23 +42,33 @@
         </tbody>
       </table>
       </div>
-      <nav aria-label="Page navigation example">
+      <nav aria-label="Page navigation">
         <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
+          <li class="page-item ${pageMaker.startPage == 1 ? 'disabled' : ''}">
+            <a class="page-link" href='<c:out value="${pageMaker.startPage -1 }"/>' aria-label="Previous">
               <span aria-hidden="true">&laquo;</span>
             </a>
           </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
+          
+          <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
+	          <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
+	            <a class="page-link" href="${num }">${num }</a>
+	          </li>
+          </c:forEach>
+          <c:if test="${pageMaker.next }">
+	          <li class="page-item">
+	            <a class="page-link" href="#" aria-label="Next">
+	              <span aria-hidden="true">&raquo;</span>
+	            </a>
+	          </li>
+          </c:if>
         </ul>
       </nav>
+      <form id='actionForm' action="/board/list" method='get'>
+		<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' >
+		<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' >
+	  </form>
+	  
       <form class="form-inline search">
           <select class="custom-select">
             <option selected>제목+내용</option>
@@ -139,6 +129,29 @@
 
 	      $("#myModal").modal("show");
 	    }
+	    
+	    // 조회 페이지로 이동 처리
+		$(".move").on("click", function(e) {
+			e.preventDefault();
+			actionForm.append(
+				"<input type='hidden' name='bno' value='" + $(this).attr("href") + "'>"
+			);
+			actionForm.attr("action", "/board/get");
+			actionForm.submit();
+
+		});
+	    
+	    // form 태그로 URL의 이동 처리
+	    var actionForm = $("#actionForm");
+		$(".page-item a").on("click", function(e) {
+			// a 태그를 클릭해도 페이지 이동이 없도록함
+			e.preventDefault();
+
+			// form 태그 내 pageNum 값을 href 속성값으로 변경
+			actionForm.find("input[name='pageNum']")
+					.val($(this).attr("href"));
+			actionForm.submit();
+		});
 	  });
 	</script>
   </body>

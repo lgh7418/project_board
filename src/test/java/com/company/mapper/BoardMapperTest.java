@@ -1,5 +1,7 @@
 package com.company.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.company.config.RootConfig;
 import com.company.domain.BoardVO;
+import com.company.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -25,6 +28,16 @@ public class BoardMapperTest {
 		mapper.getList().forEach(board -> log.info(board));
 	}
 	
+	@Test
+	public void testPaging() {
+	    Criteria cri = new Criteria();
+	    // 한 페이지당 10개씩 출력, 3페이지에 해당하는 데이터
+	    cri.setPageNum(3);
+	    cri.setAmount(10);
+	    List<BoardVO> list = mapper.getListWithPaging(cri);
+	    list.forEach(board -> log.info(board.getBno()));
+	}
+	
 	//@Test
 	public void testInsert() {
 
@@ -37,6 +50,17 @@ public class BoardMapperTest {
 
 		// lombok의 toString()을 이용해서 bno값을 알아보기 위함(bno=null) 
 		log.info(board);
+	}
+	
+	//@Test
+	public void testInsertDumy() {
+		for(int i=1; i<200; i++) {
+			BoardVO board = new BoardVO();
+			board.setTitle("테스트 글 " + i);
+			board.setContent("테스트 글 " + i + "입니다.");
+			board.setWriter("newbie");
+			mapper.insert(board);
+		}
 	}
 	
 	//@Test

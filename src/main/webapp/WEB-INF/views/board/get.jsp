@@ -23,8 +23,10 @@
 	        <div class="article-date">
 	          <p>
 	            <fmt:formatDate pattern="yyyy.MM.dd kk:mm" value="${board.regdate }"/> |
-	            <a href='/board/modify?bno=<c:out value="${board.bno }"/>' class="text-info"> 수정 </a>|
-	            <a href="/board/remove" class="text-danger"> 삭제</a>
+	            <!-- <a href='/board/modify?bno=<c:out value="${board.bno }"/>' class="text-info"> 수정 </a>| -->
+	            <a data-oper="modify" href="#" class="text-info"> 수정 </a>|
+	            <!-- 삭제버튼 누르면 alert창 띄워서 확인하게 만들기 -->
+	            <a data-oper="remove" href="#" class="text-danger"> 삭제</a>
 	          </p>
 	          <p><i class="fas fa-eye"></i> 3 <i class="fas fa-thumbs-up"></i> 1</p>
 	        </div>
@@ -92,9 +94,36 @@
 	    </div>
 	    <div class="float-right">
           <a href="/board/register" class="btn btn-outline-info">글쓰기</a>
-          <a href="/board/list" class="btn btn-outline-secondary">글목록</a>
+          <a href="#" data-oper='list' class="btn btn-outline-secondary">글목록</a>
+		  <form id='operForm' method="get">
+			<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
+			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+			<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+		  </form>
+			          
         </div>
 	  </div>
     </div>
+    <script type="text/javascript">
+		$(document).ready(function() {
+		  
+		  var operForm = $("#operForm"); 
+		  $('a').on("click", function(e){
+			  e.preventDefault();
+			  var oper = $(this).data("oper");
+			  
+			  if(oper === 'remove'){
+			      operForm.attr("action", "/board/remove");
+		      }else if(oper === 'modify'){
+		    	  operForm.attr("action","/board/modify")
+		      }else if(oper === 'list'){
+		    	  operForm.find("#bno").remove();
+				  operForm.attr("action","/board/list");
+		      }
+			  
+			  operForm.submit();	  
+		  });
+		});
+	</script>
   </body>
 </html>
