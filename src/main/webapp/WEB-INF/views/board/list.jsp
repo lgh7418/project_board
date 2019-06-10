@@ -67,17 +67,23 @@
       <form id='actionForm' action="/board/list" method='get'>
 		<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' >
 		<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' >
+		<!-- 다른 페이지로 이동해도 검색 결과를 유지하도록 처리 -->
+		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type }"/>'>
+		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'>
 	  </form>
 	  
-      <form class="form-inline search">
-          <select class="custom-select">
-            <option selected>제목+내용</option>
-            <option value="1">제목</option>
-            <option value="2">내용</option>
-            <option value="3">글쓴이</option>
+      <form class="form-inline search" id="searchForm" action="/board/list" method="get">
+          <select class="custom-select" name="type">
+            <option value="TC" selected>제목+내용</option>
+            <option value="T" <c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+            <option value="C" <c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+            <option value="W" <c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>글쓴이</option>
           </select>
         <div class="input-group">
-          <input type="text" class="form-control">
+          <input type="text" class="form-control" name="keyword"
+          	value='<c:out value="${pageMaker.cri.keyword}"/>'>
+          <input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum }">
+          <input type="hidden" name="amount" value="${pageMaker.cri.amount }">
           <div class="input-group-append">
             <button class="btn" type="button"><i class="fas fa-search"></i></button>
           </div>
@@ -153,6 +159,20 @@
 			actionForm.submit();
 		});
 	  });
+	  
+	  
+	  var searchForm = $("#searchForm");
+	  $("#searchForm button").on("click", function(e) {
+			if (!searchForm.find("input[name='keyword']").val()) {
+				alert("키워드를 입력하세요");
+				return false;
+			}
+			// 검색 결과 페이지가 1페이지부터 시작하도록 처리
+			searchForm.find("input[name='pageNum']").val("1");
+			e.preventDefault();
+			searchForm.submit();
+		});
+	  
 	</script>
   </body>
 </html>

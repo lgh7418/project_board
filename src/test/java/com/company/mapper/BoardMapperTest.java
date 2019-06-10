@@ -28,7 +28,7 @@ public class BoardMapperTest {
 		mapper.getList().forEach(board -> log.info(board));
 	}
 	
-	@Test
+	//@Test
 	public void testPaging() {
 	    Criteria cri = new Criteria();
 	    // 한 페이지당 10개씩 출력, 3페이지에 해당하는 데이터
@@ -106,4 +106,16 @@ public class BoardMapperTest {
 		log.info("UPDATE COUNT: " + count);
 
 	}
+	
+	 @Test
+	  public void testSearch() {
+
+	    Criteria cri = new Criteria();
+	    cri.setKeyword("수정된");
+	    cri.setType("TCW");
+
+	    List<BoardVO> list = mapper.getListWithPaging(cri);
+
+	    list.forEach(board -> log.info(board));
+	  }
 }

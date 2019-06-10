@@ -22,7 +22,7 @@
 	        </div>
 	        <div class="article-date">
 	          <p>
-	            <fmt:formatDate pattern="yyyy.MM.dd kk:mm" value="${board.regdate }"/> |
+	            <fmt:formatDate pattern="yyyy.MM.dd. kk:mm" value="${board.regdate }"/> |
 	            <!-- <a href='/board/modify?bno=<c:out value="${board.bno }"/>' class="text-info"> 수정 </a>| -->
 	            <a data-oper="modify" href="#" class="text-info"> 수정 </a>|
 	            <!-- 삭제버튼 누르면 alert창 띄워서 확인하게 만들기 -->
@@ -58,57 +58,242 @@
 	
 	        <p class="reply-count">댓글 2</p>
 	        <div class="card-footer text-muted">
-	          <div class="reply-profile">
-	            <div class="btn-group" role="group">
-	              <div class="profile">
-	                <img
-	                  src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
-	                />
-	              </div>
-	              <a href="#" class="profile-text">프로필</a>
-	            </div>
-	            <p>첫번째 댓글입니다.</p>
-	            <p class="reply-date">2019.05.16. 21:55</p>
-	            <hr />
-	          </div>
-	
-	          <div class="reply-profile">
-	            <div class="btn-group" role="group">
-	              <div class="profile">
-	                <img
-	                  src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
-	                />
-	              </div>
-	              <a href="#" class="profile-text">프로필</a>
-	            </div>
-	            <p>두번째 댓글입니다.</p>
-	            <p class="reply-date">2019.05.16. 21:55</p>
-	            <hr />
-	          </div>
-	          <form class="reply-form">
-	            <textarea name="" id="" cols="30" class="form-control"></textarea>
-	            <button type="button" class="btn btn-primary">등록</button>
+		      <ul class="chat">
+		          <li data-rno="12">
+			          <div class="reply-profile">
+			            <div class="btn-group" role="group">
+			              <div class="profile">
+			                <img
+			                  src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
+			                />
+			              </div>
+			              <a href="#" class="profile-text">프로필</a>
+			            </div>
+			            <div class="reply-btn">
+		             	  <a data-oper="modify" href="#" class="text-info"> 수정 </a>|
+			              <a data-oper="remove" href="#" class="text-danger"> 삭제</a>
+			            </div>
+			            <p class="reply">첫번째 댓글입니다.</p>
+			            <p class="reply-date">2019.05.16. 21:55</p>
+			            <div class="modify-box"></div>
+			            <hr />
+			          </div>
+		          </li>
+			  </ul>
+			  <div id="reply-page"></div>
+			  <form action="" class="reply-form">
+			  	<input type="hidden" name="replyer" value="replyer">
+	            <textarea name="reply" id="" cols="30" class="form-control"></textarea>
+	            <button type="button" id="replyBtn" class="btn btn-primary">등록</button>
 	          </form>
 	        </div>
 	      </div>
 	    </div>
 	    <div class="float-right">
           <a href="/board/register" class="btn btn-outline-info">글쓰기</a>
-          <a href="#" data-oper='list' class="btn btn-outline-secondary">글목록</a>
+          <a href="/board/list" data-oper='list' class="btn btn-outline-secondary">글목록</a>
 		  <form id='operForm' method="get">
 			<input type='hidden' id='bno' name='bno' value='<c:out value="${board.bno}"/>'>
 			<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 			<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
-		  </form>
-			          
+			<input type='hidden' name='keyword' value='<c:out value="${cri.keyword}"/>'>
+  			<input type='hidden' name='type' value='<c:out value="${cri.type}"/>'>  
+		  </form>			          
         </div>
 	  </div>
     </div>
+    <script type="text/javascript" src="/resources/js/reply.js"></script>
+    <script>
+    	$(document).ready(function () {
+	    	var bnoValue = '<c:out value="${board.bno}"/>';
+	    	var replyUL = $(".chat");
+    	  
+    	    showList(1);
+    	    
+			function showList(page){
+	    		 console.log("show list " + page);
+				 replyService.getList({bno:bnoValue,page: page|| 1 }, function(replyCnt, list) {
+					 $(".reply-count").text("댓글 " + replyCnt);
+					 console.log("replyCnt: "+ replyCnt );
+					 console.log("list: " + list);
+					 console.log(list);
+					  
+					 if(page == -1){
+					    pageNum = Math.ceil(replyCnt/10.0);
+					    showList(pageNum);
+					    return;
+					 }
+					   
+					 var str="";
+					   
+					 if(list == null || list.length == 0){
+					     return;
+					  }
+					   
+				     for (var i = 0, len = list.length || 0; i < len; i++) {
+				        str += "<li data-rno='"+list[i].rno+"'>";
+				        str += '<div class="reply-profile">';
+				      	str += '<div class="btn-group" role="group">';
+				      	str += '<div class="profile">';
+				      	str += '<img src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40" />';
+				      	str += '</div>';
+				      	str += '<a href="#" class="profile-text">'+list[i].replyer+'</a>';
+				      	str += '</div>';
+				      	str += '<div class="reply-btn">';
+				      	str += '<a data-oper="modify" href="#" class="text-info"> 수정 </a>|';
+				      	str += '<a data-oper="remove" href="#" class="text-danger"> 삭제</a>';
+				      	str += '</div>';
+				      	str += '<p class="reply">'+list[i].reply+'</p>';
+				      	str += '<p class="reply-date">'+replyService.displayTime(list[i].replyDate)+'</p>';
+				      	str += '<div class="modify-box"></div>'
+				      	str += '<hr />';
+				      	str += '</div>';
+				      	str += '</li>';
+				     }
+				     replyUL.html(str);
+					 showReplyPage(replyCnt);			    	 
+
+				});//end function
+			}//end showList	
+			
+			
+			var pageNum = 1;
+			// 댓글 페이지 넣을 공간
+		    var replyPageFooter = $("#reply-page");
+		    
+		    function showReplyPage(replyCnt){
+		      
+		      if(replyCnt <= 10) {
+		    	  replyPageFooter.html("");
+		    	  return;
+		      }
+		    	
+		      // 1번 페이지의 모든 쪽을 다 사용한다고 가정하고 끝번호를 구함(10)
+		      var endNum = Math.ceil(pageNum / 10.0) * 10;
+		      // 끝번호를 이용해서 시작 번호를 구함
+		      var startNum = endNum - 9; 
+		      
+		      var prev = startNum != 1;
+		      var next = false;
+		      
+		      // 총 댓글 수가 마지막 쪽 안에 들어간다면
+		      if(endNum * 10 >= replyCnt){
+		    	// 모든 쪽을 다 사용하지 않으므로 끝 번호를 조정해야 함
+		        endNum = Math.ceil(replyCnt/10.0);
+		      }
+		      
+		      // 최종적으로 조정된 endNum으로 이 페이지의 마지막 쪽까지의 댓글 수 보다 총 댓글 수가 많으면 다음 페이지를 생성
+		      if(endNum * 10 < replyCnt){
+		        next = true;
+		      }
+		      
+		      var str = "<ul class='pagination pull-right'>";
+		      
+		      // 이전 쪽을 생성
+		      if(prev){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
+		      }
+		      
+		      for(var i = startNum ; i <= endNum; i++){
+		        
+		        var active = pageNum == i? "active":"";
+		        
+		        str+= "<li class='page-item "+active+" '><a class='page-link' href='"+i+"'>"+i+"</a></li>";
+		      }
+		      
+		      if(next){
+		        str+= "<li class='page-item'><a class='page-link' href='"+(endNum + 1)+"'>Next</a></li>";
+		      }
+		      
+		      str += "</ul></div>";
+		      
+		      console.log(str);
+		      
+		      replyPageFooter.html(str);
+		    }
+		     
+		    replyPageFooter.on("click","li a", function(e){
+		       e.preventDefault();
+		       console.log("page click");
+		       
+		       var targetPageNum = $(this).attr("href");
+		       
+		       console.log("targetPageNum: " + targetPageNum);
+		       
+		       pageNum = targetPageNum;
+		       
+		       showList(pageNum);
+		     });
+		     
+			var replyBtn = $("#replyBtn");
+	    	var replyForm = $('.reply-form');
+	    	var inputReply = replyForm.find('textarea[name="reply"]');
+	    	var inputReplyer = replyForm.find('input[name="replyer"]');
+		     
+		    replyBtn.on("click",function(e){
+		    	 var reply = {
+    	             reply: inputReply.val(),
+    	             replyer: inputReplyer.val(),
+    	             bno: bnoValue
+    	         };
+	    	     replyService.add(reply, function(result){
+		    	     alert(result);
+		    	     inputReply.val("");
+		    	     
+		    	     // 댓글의 마지막 페이지로 이동
+		    	     showList(-1);
+	    	    });
+		    }); 
+		     
+		    
+		    
+		    $(document).on("click", ".reply-btn a[data-oper='modify']", function(e){
+		    	  e.preventDefault();
+		    	  var replyProfile = $(this).closest(".reply-profile");
+		    	  replyProfile.find("p").hide();
+		    	  var reply = replyProfile.find(".reply").text();
+		    	  console.log(replyProfile.find(".reply"));
+		    	  var replyer = replyProfile.find(".profile-text").text();
+		    	  var modifyBox = replyProfile.find(".modify-box");
+
+		    	  var str="";
+		    	  str += '<form action="" class="reply-modify">';
+		    	  str += '<input type="hidden" name="replyer" value="'+replyer+'">';
+		    	  str += '<textarea name="reply" id="" cols="25" class="form-control">'+reply+'</textarea>';
+		    	  str += '<button type="button" id="replyModFormBtn" class="btn btn-primary">수정</button>';
+		    	  str += '</form>';
+
+		    	  modifyBox.html(str)
+		    	  
+				  $(document).on("click", "#replyModFormBtn", function(e){
+					  var rno = replyProfile.parents("li").data("rno");
+					  console.log(rno);
+				   	  var reply = {rno: rno, reply: replyProfile.find("textarea").val()};
+				   	  
+	 			   	  replyService.update(reply, function(result){
+				   		  alert(result);
+				   		  showList(pageNum);
+				   	  });
+				  });
+		    });
+		    
+		    $(document).on("click", ".reply-btn a[data-oper='remove']", function(e){
+		    	 var rno = $(this).parents("li").data("rno");
+		    	 replyService.remove(rno, function(result){
+		    		alert(result);
+		    		showList(pageNum);
+		    	});
+		    });
+		    
+		    
+
+    	});
+    </script>
     <script type="text/javascript">
 		$(document).ready(function() {
 		  
 		  var operForm = $("#operForm"); 
-		  $('a').on("click", function(e){
+		  $('.article-date a').on("click", function(e){
 			  e.preventDefault();
 			  var oper = $(this).data("oper");
 			  

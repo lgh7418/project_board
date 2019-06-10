@@ -82,6 +82,13 @@
   border-top: none;
   /* padding-top: 20px; */
 }
+
+.read .card-footer .reply-modify {
+  position: relative;
+  padding-top: 10px;
+  padding-left: 35px;
+}
+
 .read .card-footer .reply-form {
   position: relative;
   padding-top: 8px;
@@ -107,6 +114,17 @@
   margin-left: 40px;
   margin-bottom: 4px;
 }
+
+.read .card-footer .reply-profile {
+  position: relative;
+}
+
+.read .card-footer .reply-btn {
+  position: absolute;
+  right: 0;
+  top: 3px;
+}
+
 .read .card-footer p {
   color: #000;
 }
@@ -118,6 +136,10 @@
   resize: none;
   width: 90.5%;
   display: inline-block;
+}
+
+.read .reply-modify textarea {
+	width: 90%;
 }
 .read .card-footer .btn {
   position: absolute;
@@ -137,4 +159,9 @@
   display: block;
   content: "";
   clear: both;
+}
+
+ul {
+	list-style: none;
+    padding-left: 0;
 }
