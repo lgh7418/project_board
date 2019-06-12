@@ -6,7 +6,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
  	<div class="board register">
       <form action="/board/register" method="post">
-     	<input type="hidden" name="writer" value='<c:out value="${board.writer }" />' />
+     	<input type="hidden" name="writer" value='<c:out value="${board.writer}" default="writer" />' />
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">제목</span>

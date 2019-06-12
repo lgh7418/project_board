@@ -1,6 +1,7 @@
 package com.company.config;
 
 import javax.servlet.Filter;
+import javax.servlet.MultipartConfigElement;
 import javax.servlet.ServletRegistration;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -11,7 +12,7 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	// root-context.xml을 대신하는 클래스를 지정
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class[] {RootConfig.class};
+		return new Class[] { RootConfig.class, SecurityConfig.class };
 	}
 
 	@Override
@@ -29,7 +30,12 @@ public class WebConfig extends AbstractAnnotationConfigDispatcherServletInitiali
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
 
 		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
-
+		
+		MultipartConfigElement multipartConfig = 
+				new MultipartConfigElement("C:\\upload\\temp", 20971520, 41943040, 20971520);
+		
+		registration.setMultipartConfig(multipartConfig);
+		
 	}
 	
 	@Override

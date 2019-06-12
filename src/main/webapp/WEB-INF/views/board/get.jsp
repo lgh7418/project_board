@@ -56,29 +56,10 @@
 	          </div>
 	        </div>
 	
-	        <p class="reply-count">댓글 2</p>
+	        <p class="reply-count"></p>
 	        <div class="card-footer text-muted">
 		      <ul class="chat">
-		          <li data-rno="12">
-			          <div class="reply-profile">
-			            <div class="btn-group" role="group">
-			              <div class="profile">
-			                <img
-			                  src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
-			                />
-			              </div>
-			              <a href="#" class="profile-text">프로필</a>
-			            </div>
-			            <div class="reply-btn">
-		             	  <a data-oper="modify" href="#" class="text-info"> 수정 </a>|
-			              <a data-oper="remove" href="#" class="text-danger"> 삭제</a>
-			            </div>
-			            <p class="reply">첫번째 댓글입니다.</p>
-			            <p class="reply-date">2019.05.16. 21:55</p>
-			            <div class="modify-box"></div>
-			            <hr />
-			          </div>
-		          </li>
+	
 			  </ul>
 			  <div id="reply-page"></div>
 			  <form action="" class="reply-form">
@@ -140,6 +121,7 @@
 				      	str += '<a href="#" class="profile-text">'+list[i].replyer+'</a>';
 				      	str += '</div>';
 				      	str += '<div class="reply-btn">';
+				      	str += '<a data-oper="cancel" href="#" class="text-info" style="display:none"> 수정취소 </a>'
 				      	str += '<a data-oper="modify" href="#" class="text-info"> 수정 </a>|';
 				      	str += '<a data-oper="remove" href="#" class="text-danger"> 삭제</a>';
 				      	str += '</div>';
@@ -251,8 +233,10 @@
 		    	  e.preventDefault();
 		    	  var replyProfile = $(this).closest(".reply-profile");
 		    	  replyProfile.find("p").hide();
+		    	  $(this).hide();
+		    	  replyProfile.find("a[data-oper='cancel']").show();
+		    	  
 		    	  var reply = replyProfile.find(".reply").text();
-		    	  console.log(replyProfile.find(".reply"));
 		    	  var replyer = replyProfile.find(".profile-text").text();
 		    	  var modifyBox = replyProfile.find(".modify-box");
 
@@ -260,7 +244,7 @@
 		    	  str += '<form action="" class="reply-modify">';
 		    	  str += '<input type="hidden" name="replyer" value="'+replyer+'">';
 		    	  str += '<textarea name="reply" id="" cols="25" class="form-control">'+reply+'</textarea>';
-		    	  str += '<button type="button" id="replyModFormBtn" class="btn btn-primary">수정</button>';
+		    	  str += '<button type="button" id="replyModFormBtn" class="btn btn-info">수정</button>';
 		    	  str += '</form>';
 
 		    	  modifyBox.html(str)
@@ -277,9 +261,15 @@
 				  });
 		    });
 		    
+		    $(document).on("click", ".reply-btn a[data-oper='cancel']", function(e){
+		    	e.preventDefault();
+		    	showList(pageNum);
+		    });
+		    
 		    $(document).on("click", ".reply-btn a[data-oper='remove']", function(e){
-		    	 var rno = $(this).parents("li").data("rno");
-		    	 replyService.remove(rno, function(result){
+		    	e.preventDefault();
+		    	var rno = $(this).parents("li").data("rno");
+		    	replyService.remove(rno, function(result){
 		    		alert(result);
 		    		showList(pageNum);
 		    	});

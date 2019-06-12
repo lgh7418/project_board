@@ -26,7 +26,10 @@
           		<td>
           		  <a class='move' href='<c:out value="${board.bno}"/>'>
           		    <c:out value="${board.title}" />
-				  </a>
+				  </a>&nbsp;
+				  <c:if test="${board.replyCnt != 0}"> 
+				  	<a class="text-black-50">[<c:out value="${board.replyCnt }"/>]</a>
+				  </c:if>
 				</td>
           		<td><c:out value="${board.writer}"/></td>
           		<td class="text-center"><fmt:formatDate pattern="yy.MM.dd" value="${board.regdate }"/></td>
@@ -44,12 +47,13 @@
       </div>
       <nav aria-label="Page navigation">
         <ul class="pagination">
-          <li class="page-item ${pageMaker.startPage == 1 ? 'disabled' : ''}">
-            <a class="page-link" href='<c:out value="${pageMaker.startPage -1 }"/>' aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          
+          <c:if test="${pageMaker.prev}">
+            <li class="page-item">
+              <a class="page-link" href='<c:out value="${pageMaker.startPage -1 }"/>' aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+              </a>
+            </li>
+          </c:if>
           <c:forEach var="num" begin="${pageMaker.startPage }" end="${pageMaker.endPage }">
 	          <li class="page-item ${pageMaker.cri.pageNum == num ? 'active' : ''}">
 	            <a class="page-link" href="${num }">${num }</a>
@@ -57,7 +61,7 @@
           </c:forEach>
           <c:if test="${pageMaker.next }">
 	          <li class="page-item">
-	            <a class="page-link" href="#" aria-label="Next">
+	            <a class="page-link" href="${pageMaker.endPage +1 }" aria-label="Next">
 	              <span aria-hidden="true">&raquo;</span>
 	            </a>
 	          </li>
