@@ -13,7 +13,7 @@
 
 <input type='file' name='uploadFile' multiple>
 
-<button>Submit</button>
+<button type="submit">Submit</button>
 
 </form>
 
