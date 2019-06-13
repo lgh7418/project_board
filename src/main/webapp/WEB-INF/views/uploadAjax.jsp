@@ -147,8 +147,6 @@
 			// 첨부파일 데이터는 
 			var formData = new FormData();
 
-			var formData = new FormData();
-
 			var inputFile = $("input[name='uploadFile']");
 
 			var files = inputFile[0].files;
