@@ -48,7 +48,7 @@
   padding-left: 8px;
 }
 .read .card-text {
-  margin-bottom: 60px;
+  margin-bottom: 120px;
 }
 
 .read .like-box {
@@ -141,6 +141,12 @@
 .read .reply-modify textarea {
 	width: 90%;
 }
+
+.read #reply-page {
+    width: fit-content;
+    margin: 0 auto;
+}
+
 .read .card-footer .btn {
   position: absolute;
   right: 0;
@@ -148,7 +154,7 @@
 }
 
 .read .float-right {
-  margin-top: 10px;
+  margin-top: .75em;
 }
 
 .read .float-right .btn-outline-info {

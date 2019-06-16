@@ -1,0 +1,26 @@
+.login-form {
+    margin: 0 auto;
+    width: 300px;
+    padding-top: 30vh;
+}
+
+.login-table .form-control {
+    width: 300px;
+}
+
+.login-form tr {
+    padding-bottom: 20px;
+}
+
+.login-table {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+.login-table label {
+    margin-top: .6rem;
+    margin-bottom: 0;
+}
+.login-table .btn-primary {
+    width: 100%;
+    margin-top: .6rem;
+}

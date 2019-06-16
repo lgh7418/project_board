@@ -1,34 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
+  
     <%@include file="../includes/header.jsp" %>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
  	<div class="board register">
       <form action="/board/modify" method="post">
-      	<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
-        <input type='hidden' name='amount' value='<c:out value="${cri.amount }"/>'>
-        <input type='hidden' name='type' value='<c:out value="${cri.type }"/>'>
-		<input type='hidden' name='keyword' value='<c:out value="${cri.keyword }"/>'>
-      	<input type="hidden" name="bno" value='<c:out value="${board.bno }" />' />
-      	<input type="hidden" name="writer" value='<c:out value="${board.writer }" />' />
         <div class="input-group">
           <div class="input-group-prepend">
             <span class="input-group-text">제목</span>
           </div>
           <input type="text" class="form-control" name="title" value='<c:out value="${board.title }" />' />
         </div>
-        <button
-          type="button"
-          class="btn btn-link"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="사진 추가"
-        >
-          <i class="fas fa-image"></i>
-        </button>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">작성자</span>
+          </div>
+          <input type="text" class="form-control"  name="writer" value='<c:out value="${userid }"/>' readonly />
+        </div>
         <textarea class="form-control" name="content" rows="15"><c:out value="${board.content }" /></textarea>
-        <div class="register-box">
+        <div class="register-box d-flex justify-content-center">
           <input type="submit" class="btn btn-info" value="수정" />
           <input type="button" class="btn btn-outline-info" id="cancel" value="취소" />
         </div>

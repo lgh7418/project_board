@@ -9,8 +9,6 @@ import com.company.domain.Criteria;
 
 public interface BoardMapper {
 	
-	public List<BoardVO> getList();
-	
 	public List<BoardVO> getListWithPaging(Criteria cri);
 	
 	public void insert(BoardVO board);
@@ -31,4 +29,5 @@ public interface BoardMapper {
 	// amount: 댓글의 증감 (댓글이 등록되면 1 증가, 삭제되면 1 감소)
 	public void updateReplyCnt(@Param("bno") Long bno, @Param("amount") int amount);
 
+	public void updateViewCnt(@Param("bno") Long bno, @Param("amount") int amount);
 }

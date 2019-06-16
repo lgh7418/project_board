@@ -8,6 +8,8 @@ import com.company.domain.Criteria;
 public interface BoardService {
 	public void register(BoardVO board);
 
+	public BoardVO getWithView(Long bno);
+	
 	public BoardVO get(Long bno);
 
 	public boolean modify(BoardVO board);

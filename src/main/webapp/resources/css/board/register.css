@@ -3,8 +3,14 @@
   width: 75%;
   margin: 0 auto;
 }
+
+.register .input-group {
+    margin-bottom: 12px;
+}
+
 .register .input-group-prepend {
-  width: 10%;
+  width: 12%;
+  min-width: 75px;
 }
 .register .input-group-text {
   background-color: transparent;
@@ -24,11 +30,6 @@
 .register textarea {
   resize: none;
   margin-bottom: 40px;
-}
-.register div.form-control {
-  margin-bottom: 40px;
-  height: 460px;
-  overflow-y: scroll;
 }
 .register .form-control:focus {
   outline: 0;

@@ -17,43 +17,23 @@
 	                src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
 	              />
 	            </div>
-	            <a href="#" class="profile-text"><c:out value="${board.writer }" /></a>
+	            <a href="/member/info/${board.writer }" class="profile-text"><c:out value="${board.writer }" /></a>
 	          </div>
 	        </div>
 	        <div class="article-date">
 	          <p>
-	            <fmt:formatDate pattern="yyyy.MM.dd. kk:mm" value="${board.regdate }"/> |
-	            <!-- <a href='/board/modify?bno=<c:out value="${board.bno }"/>' class="text-info"> 수정 </a>| -->
-	            <a data-oper="modify" href="#" class="text-info"> 수정 </a>|
-	            <!-- 삭제버튼 누르면 alert창 띄워서 확인하게 만들기 -->
-	            <a data-oper="remove" href="#" class="text-danger"> 삭제</a>
+	            <fmt:formatDate pattern="yyyy.MM.dd. kk:mm" value="${board.regdate }"/> 
+		        <c:if test="${userid eq board.writer}">
+		            <a data-oper="modify" href="#" class="text-info">| 수정 </a>|
+		            <a data-oper="remove" href="#" class="text-danger"> 삭제</a>
+	            </c:if>
 	          </p>
-	          <p><i class="fas fa-eye"></i> 3 <i class="fas fa-thumbs-up"></i> 1</p>
+	          <p><i class="fas fa-eye"></i> <c:out value="${board.viewCnt }" /> </p>
 	        </div>
 	      </div>
 	      <div class="card-body">
 	        <div class="card-text">
 	          <p><c:out value="${board.content }" /></p>
-	        </div>
-	        <div class="like-box">
-	          <div class="input-group">
-	            <div class="input-group-prepend">
-	              <span class="input-group-text"><a href="#">좋아요</a></span>
-	            </div>
-	            <button type="button" class="btn btn-link"><i class="far fa-thumbs-up"></i></button>
-	            <div class="input-group-append">
-	              <span class="input-group-text">1</span>
-	            </div>
-	          </div>
-	          <div class="input-group">
-	            <div class="input-group-prepend">
-	              <span class="input-group-text"><a href="#">싫어요</a></span>
-	            </div>
-	            <button type="button" class="btn btn-link"><i class="far fa-thumbs-down"></i></button>
-	            <div class="input-group-append">
-	              <span class="input-group-text">0</span>
-	            </div>
-	          </div>
 	        </div>
 	
 	        <p class="reply-count"></p>
@@ -63,9 +43,17 @@
 			  </ul>
 			  <div id="reply-page"></div>
 			  <form action="" class="reply-form">
-			  	<input type="hidden" name="replyer" value="replyer">
-	            <textarea name="reply" id="" cols="30" class="form-control"></textarea>
-	            <button type="button" id="replyBtn" class="btn btn-primary">등록</button>
+				<c:choose>
+			  		<c:when test="${empty userid }">
+			  			<textarea name="reply" id="" cols="30" class="form-control" readonly>로그인한 사용자만 댓글을 달 수 있습니다.</textarea>
+            			<button type="button" id="replyBtn" class="btn btn-primary" disabled>등록</button>
+			  		</c:when>
+			  		<c:otherwise>
+			  			<input type="hidden" name="replyer" value='<c:out value="${userid }"/>'>
+			            <textarea name="reply" id="" cols="30" class="form-control"></textarea>
+		            	<button type="button" id="replyBtn" class="btn btn-primary">등록</button>
+			  		</c:otherwise>
+			  	</c:choose>
 	          </form>
 	        </div>
 	      </div>
@@ -88,6 +76,7 @@
     	$(document).ready(function () {
 	    	var bnoValue = '<c:out value="${board.bno}"/>';
 	    	var replyUL = $(".chat");
+ 	    	var replyer = '<c:out value="${userid}"/>';
     	  
     	    showList(1);
     	    
@@ -118,13 +107,15 @@
 				      	str += '<div class="profile">';
 				      	str += '<img src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40" />';
 				      	str += '</div>';
-				      	str += '<a href="#" class="profile-text">'+list[i].replyer+'</a>';
+				      	str += '<a href="/member/info/'+list[i].replyer+'" class="profile-text">'+list[i].replyer+'</a>';
 				      	str += '</div>';
-				      	str += '<div class="reply-btn">';
-				      	str += '<a data-oper="cancel" href="#" class="text-info" style="display:none"> 수정취소 </a>'
-				      	str += '<a data-oper="modify" href="#" class="text-info"> 수정 </a>|';
-				      	str += '<a data-oper="remove" href="#" class="text-danger"> 삭제</a>';
-				      	str += '</div>';
+				      	if(list[i].replyer === replyer){
+					      	str += '<div class="reply-btn">';
+					      	str += '<a data-oper="cancel" href="#" class="text-info" style="display:none"> 수정취소 </a>'
+					      	str += '<a data-oper="modify" href="#" class="text-info"> 수정 </a>|';
+					      	str += '<a data-oper="remove" href="#" class="text-danger"> 삭제</a>';
+					      	str += '</div>';
+				      	}
 				      	str += '<p class="reply">'+list[i].reply+'</p>';
 				      	str += '<p class="reply-date">'+replyService.displayTime(list[i].replyDate)+'</p>';
 				      	str += '<div class="modify-box"></div>'
@@ -269,7 +260,25 @@
 		    $(document).on("click", ".reply-btn a[data-oper='remove']", function(e){
 		    	e.preventDefault();
 		    	var rno = $(this).parents("li").data("rno");
-		    	replyService.remove(rno, function(result){
+		    	
+		    	console.log("RNO: " + rno);
+	     	    console.log("REPLYER: " + replyer);
+	     	    
+	     	    if(!replyer){
+	        		  alert("로그인후 삭제가 가능합니다.");
+	        		  modal.modal("hide");
+	        		  return;
+	        	}
+	     	    
+	     	    var replyProfile = $(this).closest(".reply-profile");
+	     	    var originalReplyer = replyProfile.find(".profile-text").val();
+	     	    
+	     	    if(replyer != originalReplyer){
+	        		  alert("자신이 작성한 댓글만 삭제가 가능합니다.");
+	        		  return;
+        	    }
+		    	
+		    	replyService.remove(rno, originalReplyer, function(result){
 		    		alert(result);
 		    		showList(pageNum);
 		    	});

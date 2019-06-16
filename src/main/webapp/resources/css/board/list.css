@@ -1,6 +1,9 @@
 .list th {
   text-align: center;
 }
+.list th:first-child {
+  width: 65px;
+}
 .list td .btn-info {
   float: right;
 }

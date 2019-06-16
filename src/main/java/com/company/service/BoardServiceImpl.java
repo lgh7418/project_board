@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.company.domain.BoardVO;
 import com.company.domain.Criteria;
@@ -28,13 +29,23 @@ public class BoardServiceImpl implements BoardService {
 		mapper.insertSelectKey(board);
 	}
 
+	@Transactional
 	@Override
-	public BoardVO get(Long bno) {
-
+	public BoardVO getWithView(Long bno) {
+		
 		log.info("get......" + bno);
-
+		
+		mapper.updateViewCnt(bno, 1);
 		return mapper.read(bno);
 
+	}
+	
+	@Override
+	public BoardVO get(Long bno) {
+		
+		log.info("get......" + bno);
+		
+		return mapper.read(bno);
 	}
 
 	@Override

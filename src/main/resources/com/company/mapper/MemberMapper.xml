@@ -15,18 +15,17 @@
     <collection property="authList" resultMap="authMap">
     </collection> 
   </resultMap>
-  
-  <resultMap type="com.company.domain.AuthVO" id="authMap">
-    <result property="userid" column="userid"/>
-    <result property="auth" column="auth"/>
-  </resultMap>
-  
-  <select id="read" resultMap="memberMap">
-	SELECT 
-	  mem.userid,  userpw, username, enabled, regdate, updatedate, auth
-	FROM 
-	  tbl_member mem LEFT OUTER JOIN tbl_member_auth auth on mem.userid = auth.userid 
-	WHERE mem.userid = #{userid} 
-  </select>
 
+  <select id="login" resultMap="memberMap">
+  	select * from tbl_member where userid = #{userid} and userpw = #{userpw}
+  </select>
+  
+  <select id="readUserid" resultType="java.lang.String">
+  	select userid from tbl_member where userid = #{userid}
+  </select>
+  
+  <insert id="insert">
+  	insert into tbl_member (userid, userpw, username)
+  	values (#{userid}, #{userpw}, #{username})
+  </insert>
 </mapper>
