@@ -27,8 +27,6 @@ import lombok.extern.log4j.Log4j;
 public class ReplyController {
 	private ReplyService service;
 
-	// consumes: json 방식의 데이터만 처리하도록함
-	// produces: 문자열을 반환하도록 함
 	@PreAuthorize("isAuthenticated()")
 	@PostMapping(value = "/new", consumes = "application/json", produces = { MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> create(@RequestBody ReplyVO vo) {
@@ -40,22 +38,11 @@ public class ReplyController {
 				: new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 
-	// 안쓰임
-	@GetMapping(value = "/{rno}", 
-			produces = { MediaType.APPLICATION_XML_VALUE, 
-					     MediaType.APPLICATION_JSON_UTF8_VALUE })
-	public ResponseEntity<ReplyVO> get(@PathVariable("rno") Long rno) {
-		log.info("get: " + rno);
-		return new ResponseEntity<>(service.get(rno), HttpStatus.OK);
-	}
-
 	@RequestMapping(method = { RequestMethod.PUT, RequestMethod.PATCH }, 
 			value = "/{rno}", 
 			consumes = "application/json",
 			produces = {MediaType.TEXT_PLAIN_VALUE })
 	public ResponseEntity<String> modify(@RequestBody ReplyVO vo, @PathVariable("rno") Long rno) {
-		// 실제 수정되는 데이터는 JSON 포맷
-		// @RequestBody는 전달된 데이터를 ReplyVO 타입으로 변환
 		vo.setRno(rno);
 		log.info("rno: " + rno);
 		log.info("modify: " + vo);

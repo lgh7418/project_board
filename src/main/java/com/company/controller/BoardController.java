@@ -56,7 +56,6 @@ public class BoardController {
 	
 	@GetMapping("/get")
 	public void get(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, Model model) {
-		// @ModelAttribute는 자동으로 Model에 데이터를 지정한 이름으로 담아줌
 		log.info("/get");
 	    model.addAttribute("board", service.getWithView(bno));
 	}
@@ -80,7 +79,6 @@ public class BoardController {
 		rttr.addAttribute("type", cri.getType());
 		rttr.addAttribute("keyword", cri.getKeyword());
 		
-		// 수정한 페이지로 리다이렉트하게 고치기!
 		return "redirect:/board/list";
 	}
 	
@@ -113,7 +111,6 @@ public class BoardController {
 		model.addAttribute("pageMaker", new PageDTO(cri, total));
 		log.info(new PageDTO(cri, total));
 		
-		//return "redirect:/member/mypage";
 		return "/member/mypage";
 	}
 

@@ -11,7 +11,7 @@
 	        <div class="card-header">
 	          <div class="article-title">
 	            <h5><c:out value="${board.title }" /></h5>
-	            <div class="btn-group" role="group"">
+	            <div class="btn-group" role="group">
 	            <div class="profile">
 	              <img
 	                src="//www.gravatar.com/avatar/e2b95f79a5b08dcc676a5cc0f9c645e3?d=identicon&s=40"
@@ -131,7 +131,6 @@
 			
 			
 			var pageNum = 1;
-			// 댓글 페이지 넣을 공간
 		    var replyPageFooter = $("#reply-page");
 		    
 		    function showReplyPage(replyCnt){
@@ -141,28 +140,22 @@
 		    	  return;
 		      }
 		    	
-		      // 1번 페이지의 모든 쪽을 다 사용한다고 가정하고 끝번호를 구함(10)
 		      var endNum = Math.ceil(pageNum / 10.0) * 10;
-		      // 끝번호를 이용해서 시작 번호를 구함
 		      var startNum = endNum - 9; 
 		      
 		      var prev = startNum != 1;
 		      var next = false;
 		      
-		      // 총 댓글 수가 마지막 쪽 안에 들어간다면
 		      if(endNum * 10 >= replyCnt){
-		    	// 모든 쪽을 다 사용하지 않으므로 끝 번호를 조정해야 함
 		        endNum = Math.ceil(replyCnt/10.0);
 		      }
 		      
-		      // 최종적으로 조정된 endNum으로 이 페이지의 마지막 쪽까지의 댓글 수 보다 총 댓글 수가 많으면 다음 페이지를 생성
 		      if(endNum * 10 < replyCnt){
 		        next = true;
 		      }
 		      
 		      var str = "<ul class='pagination pull-right'>";
 		      
-		      // 이전 쪽을 생성
 		      if(prev){
 		        str+= "<li class='page-item'><a class='page-link' href='"+(startNum -1)+"'>Previous</a></li>";
 		      }
@@ -213,7 +206,6 @@
 		    	     alert(result);
 		    	     inputReply.val("");
 		    	     
-		    	     // 댓글의 마지막 페이지로 이동
 		    	     showList(-1);
 	    	    });
 		    }); 

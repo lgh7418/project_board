@@ -117,9 +117,6 @@
 
 	    checkModal(result);
 		
-	    //replaceState(): 새로운 히스토리를 하나 생성하는 대신에, 현재의 히스토리 엔트리를 변경
-	    // 이전 주소 기록을 지우고 새로운 주소를 넣음 => result를 가졌던 기록을 없앰(경로 변경은 없음 null)
-	    // 뒤로가기가 활성화되지 않음
 	    history.replaceState({}, null, null);
 
 	    function checkModal(result) {
@@ -136,7 +133,6 @@
 	      $("#myModal").modal("show");
 	    }
 	    
-	    // 조회 페이지로 이동 처리
 	    var actionForm = $("#actionForm");
 		$(".move").on("click", function(e) {
 			e.preventDefault();

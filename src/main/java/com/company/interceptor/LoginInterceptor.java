@@ -1,6 +1,5 @@
 package com.company.interceptor;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,15 +35,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 		MemberVO memberVO = (MemberVO) modelMap.get("memberVO");
 		if(memberVO != null) {
 			log.info("로그인 성공");
-			
-/*			if(req.getParameter("remember") != null) {
-				// 쿠키 생성
-				Cookie loginCookie = new Cookie("loginCookie", session.getId());
-				loginCookie.setPath("/");
-				// 장기 보관 메서드(7일)
-				loginCookie.setMaxAge(60*60*24*7);
-				res.addCookie(loginCookie);
-			}*/
 			
 			session.setAttribute(LOGIN, memberVO.getUserid());
 			String referer = req.getHeader("Referer");

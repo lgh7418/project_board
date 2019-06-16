@@ -19,7 +19,6 @@ import lombok.extern.log4j.Log4j;
 @Log4j
 public class ReplyServiceImpl implements ReplyService {
 	
-	// BoardMapper를 이용해야 하므로 자동 주입 이용 못함
 	@Setter(onMethod_ = @Autowired)
 	private ReplyMapper mapper;
 

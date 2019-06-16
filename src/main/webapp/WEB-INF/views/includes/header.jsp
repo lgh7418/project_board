@@ -32,14 +32,10 @@
     			alert("<c:out value='${msg}'/>");
     		}
     		
-    		// 게시글 검색
-    		// form 태그로 URL의 이동 처리
     	    var actionForm = $("#actionForm");
     		$(".page-item a").on("click", function(e) {
-    			// a 태그를 클릭해도 페이지 이동이 없도록함
     			e.preventDefault();
 
-    			// form 태그 내 pageNum 값을 href 속성값으로 변경
     			actionForm.find("input[name='pageNum']")
     					.val($(this).attr("href"));
     			actionForm.submit();
@@ -51,7 +47,6 @@
     				alert("키워드를 입력하세요");
     				return false;
     			}
-    			// 검색 결과 페이지가 1페이지부터 시작하도록 처리
     			searchForm.find("input[name='pageNum']").val("1");
     			e.preventDefault();
     			searchForm.submit();
@@ -65,7 +60,6 @@
         <c:choose>
         <c:when test="${empty userid}">
         <div class="login-box">
-        	<!-- <a href="/login" class="btn btn-outline-secondary" id="login">로그인</a> -->
         	<button
 	          type="button"
 	          data-toggle="modal"
@@ -225,7 +219,7 @@
     	joinBtn.on("click", function(e) {
     		e.preventDefault();
     		
-    		var re = /^[a-zA-Z0-9]{4,12}$/ // 아이디와 패스워드가 적합한지 검사할 정규식
+    		var re = /^[a-zA-Z0-9]{4,12}$/
     	    	
    	    	var id = joinForm.find("input[name='userid']");
    	    	var pw = joinForm.find("input[name='userpw']");
