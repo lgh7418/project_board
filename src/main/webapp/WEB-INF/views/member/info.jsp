@@ -67,14 +67,12 @@
       <form id='actionForm' action="/board/mypage" method='get'>
 		<input type='hidden' name='pageNum' value='<c:out value="${pageMaker.cri.pageNum}"/>' >
 		<input type='hidden' name='amount' value='<c:out value="${pageMaker.cri.amount}"/>' >
-		<!-- 다른 페이지로 이동해도 검색 결과를 유지하도록 처리 -->
 		<input type='hidden' name='type' value='<c:out value="${pageMaker.cri.type }"/>'>
 		<input type='hidden' name='keyword' value='<c:out value="${pageMaker.cri.keyword }"/>'>
 	  </form>
     </div>
     <script>
 	  $(document).ready(function() {
-	    // 조회 페이지로 이동 처리
 	    var actionForm = $("#actionForm");
 		$(".move").on("click", function(e) {
 			e.preventDefault();
